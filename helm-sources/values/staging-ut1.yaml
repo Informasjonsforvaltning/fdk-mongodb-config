@@ -1,0 +1,6 @@
+#DValues for ut1 environment
+NAMESPACE: ut1
+FDK_MONGODB_VOLUMENAME_DB: pubapi-dev-ut1-mongodb-db
+FDK_MONGODB_STORAGESIZE_DB: 7G
+FDK_MONGODB_VOLUMENAME_BKP: pubapi-dev-ut1-mongodb-bkp
+FDK_MONGODB_STORAGESIZE_BKP: 7G

@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  mongodb:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2020-01-17T10:20:17.221086799+01:00"
+    description: Config for MongoDB
+    digest: d423968e3d1e66baa1e8681bd3e3dbde8f9492ffa74c3d8f27e812801082de9f
+    home: https://github.com/Informasjonsforvaltning/fdk-mongodb-config
+    name: mongodb
+    urls:
+    - https://informasjonsforvaltning.github.io/fdk-mongodb-config/mongodb-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-01-17T10:20:17.220684366+01:00"

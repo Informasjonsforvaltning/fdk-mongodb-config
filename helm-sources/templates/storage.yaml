@@ -1,0 +1,69 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: mongodb-claim0
+  name: mongodb-claim0
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec: {{ if (.Values.FDK_TEMPDISK) and .Values.FDK_TEMPDISK "true" }}{{ else }}
+        storageClassName: ""
+        volumeName: {{ required "Missing value FDK_MONGODB_VOLUMENAME_DB" .Values.FDK_MONGODB_VOLUMENAME_DB }}{{ end }}
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ required "Missing value FDK_MONGODB_STORAGESIZE_DB" .Values.FDK_MONGODB_STORAGESIZE_DB }}
+status: {}
+  {{ if (.Values.FDK_TEMPDISK) and .Values.FDK_TEMPDISK "true" }} {{ else }}
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ required "Missing value FDK_MONGODB_VOLUMENAME_DB" .Values.FDK_MONGODB_VOLUMENAME_DB }}
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec:
+  storageClassName: ""
+  capacity:
+    storage: {{ required "Missing value FDK_MONGODB_STORAGESIZE_DB" .Values.FDK_MONGODB_STORAGESIZE_DB }}
+  accessModes:
+    - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: {{ required "Missing value FDK_MONGODB_VOLUMENAME_DB" .Values.FDK_MONGODB_VOLUMENAME_DB }}
+    fsType: ext4
+  {{ end }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  creationTimestamp: null
+  labels:
+    fdk.service: mongodb-claim1
+  name: mongodb-claim1
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec: {{ if (.Values.FDK_TEMPDISK) and .Values.FDK_TEMPDISK "true" }}{{ else }}
+        storageClassName: ""
+        volumeName: {{ required "Missing value FDK_MONGODB_VOLUMENAME_BKP" .Values.FDK_MONGODB_VOLUMENAME_BKP }}{{ end }}
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ required "Missing value FDK_MONGODB_STORAGESIZE_BKP" .Values.FDK_MONGODB_STORAGESIZE_BKP }}
+status: {}
+  {{ if (.Values.FDK_TEMPDISK) and .Values.FDK_TEMPDISK "true" }} {{ else }}
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ required "Missing value FDK_MONGODB_VOLUMENAME_BKP" .Values.FDK_MONGODB_VOLUMENAME_BKP }}
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec:
+  storageClassName: ""
+  capacity:
+    storage: {{ required "Missing value FDK_MONGODB_STORAGESIZE_BKP" .Values.FDK_MONGODB_STORAGESIZE_BKP }}
+  accessModes:
+    - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: {{ required "Missing value FDK_MONGODB_VOLUMENAME_BKP" .Values.FDK_MONGODB_VOLUMENAME_BKP }}
+    fsType: ext4
+  {{ end }}
