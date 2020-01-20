@@ -1,4 +1,4 @@
-name: Deploy to staging when pull request is created
+name: Deploy to staging (digdir) when pull request is created
 
 on:
   pull_request:
@@ -21,7 +21,7 @@ jobs:
             helm init --client-only
             helm repo add fdk-mongodb https://informasjonsforvaltning.github.io/fdk-mongodb-config/
             helm fetch --untar --untardir ./helm fdk-mongodb/mongodb
-            helm template -f ./helm/mongodb/values/staging.yaml ./helm/mongodb/ > ./kubectlapply.yaml
+            helm template -f ./helm/mongodb/values/staging-digdir.yaml ./helm/mongodb/ > ./kubectlapply.yaml
             cat ./kubectlapply.yaml
             chmod o+w ./kubectlapply.yaml
             cat kubectlapply.yaml
@@ -29,10 +29,10 @@ jobs:
       - name: Get kubeconfig file from GKE
         uses: machine-learning-apps/gke-kubeconfig@master
         with:
-          application_credentials: ${{ secrets.FDK_DEV_AUTODEPLOY }}
-          project_id: fdk-dev
+          application_credentials: ${{ secrets.DIGDIR_FDK_DEV_AUTODEPLOY }}
+          project_id: digdir-fdk-dev
           location_zone: europe-north1-a
-          cluster_name: fdk-dev
+          cluster_name: digdir-fdk-dev
 
       - name: Deploy to staging
         uses: docker://bitnami/kubectl:latest
@@ -46,4 +46,4 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: pullreminders/slack-action@master
         with:
-          args: '{\"channel\":\"C7NTH118T\",\"text\":\"Application: fdk-mongodb deployed to staging\"}'
+          args: '{\"channel\":\"C7NTH118T\",\"text\":\"Application: fdk-mongodb deployed to digdir-staging\"}'
