@@ -3,12 +3,12 @@ entries:
   mongodb:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-21T12:34:31.215410265+01:00"
+    created: "2020-01-21T15:51:43.303938376+01:00"
     description: Config for MongoDB
-    digest: 2c8afd13ee242afee32ee3606af58ca5f934427a957bdac511cbf09405c3c987
+    digest: e3e08b6955cf312129fa7d7baa3dec3d0b0904a6ef86f536858ae8453324a6db
     home: https://github.com/Informasjonsforvaltning/fdk-mongodb-config
     name: mongodb
     urls:
-    - https://informasjonsforvaltning.github.io/fdk-mongodb-config/mongodb-0.1.0.tgz
+    - https://informasjonsforvaltning.github.io/helm-chart/mongodb-0.1.0.tgz
     version: 0.1.0
-generated: "2020-01-21T12:34:31.215057328+01:00"
+generated: "2020-01-21T15:51:43.303271153+01:00"
