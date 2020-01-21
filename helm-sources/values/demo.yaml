@@ -1,6 +1,0 @@
-#DValues for demo environment
-NAMESPACE: demo
-FDK_MONGODB_VOLUMENAME_DB: pubapi-dev-demo-mongodb-db
-FDK_MONGODB_STORAGESIZE_DB: 7G
-FDK_MONGODB_VOLUMENAME_BKP: pubapi-dev-demo-mongodb-bkp
-FDK_MONGODB_STORAGESIZE_BKP: 7G

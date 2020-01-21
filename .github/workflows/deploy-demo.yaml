@@ -13,6 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Create yaml file from secret
+        id: write_file
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'secret.yaml'
+          encodedString: ${{ secrets.FDK_MONGODB_DEMO }}
+
       - name: Apply Helm template
         uses: stefanprodan/kube-tools@v1
         with:
@@ -21,8 +28,7 @@ jobs:
             helm init --client-only
             helm repo add fdk-mongodb https://informasjonsforvaltning.github.io/fdk-mongodb-config/
             helm fetch --untar --untardir ./helm fdk-mongodb/mongodb
-            helm template -f ./helm/mongodb/values/demo.yaml ./helm/mongodb/ > ./kubectlapply.yaml
-            cat ./kubectlapply.yaml
+            helm template -f ${{ steps.write_file.outputs.filePath }} ./helm/mongodb/ > ./kubectlapply.yaml
             chmod o+w ./kubectlapply.yaml
             cat kubectlapply.yaml
 
