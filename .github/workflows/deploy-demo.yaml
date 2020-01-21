@@ -3,7 +3,7 @@ name: Deploy to demo
 on:
   push:
     branches:
-      - master
+      - non-existing-branch
 
 jobs:
   deploy-demo:
