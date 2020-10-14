@@ -3,12 +3,12 @@ entries:
   mongodb:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-29T14:25:56.39790411+02:00"
+    created: "2020-10-14T11:07:13.424635692+02:00"
     description: Config for MongoDB
-    digest: dc3b345f43f67c4fc6cbcbc6f8aa0bc287b54e9318c4888157094dfd2e5b24eb
+    digest: b8df68bc75c8b5b91ea6382daaea19360e989d8890cc49e79a75217a4b356110
     home: https://github.com/Informasjonsforvaltning/fdk-mongodb-config
     name: mongodb
     urls:
     - https://informasjonsforvaltning.github.io/fdk-mongodb-config/mongodb-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-29T14:25:56.397576473+02:00"
+generated: "2020-10-14T11:07:13.42346002+02:00"

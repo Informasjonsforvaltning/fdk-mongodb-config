@@ -6,16 +6,16 @@ metadata:
     fdk.service: mongodb-claim0
   name: mongodb-claim0
   namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-spec: {{ if (.Values.FDK_TEMPDISK) and .Values.FDK_TEMPDISK "true" }}{{ else }}
+spec:
   storageClassName: ""
-  volumeName: {{ required "Missing value FDK_MONGODB_VOLUMENAME_DB" .Values.FDK_MONGODB_VOLUMENAME_DB }}{{ end }}
+  volumeName: {{ required "Missing value FDK_MONGODB_VOLUMENAME_DB" .Values.FDK_MONGODB_VOLUMENAME_DB }}
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: {{ required "Missing value FDK_MONGODB_STORAGESIZE_DB" .Values.FDK_MONGODB_STORAGESIZE_DB }}
 status: {}
-{{ if (.Values.FDK_TEMPDISK) and .Values.FDK_TEMPDISK "true" }} {{ else }}
+
 ---
 kind: PersistentVolume
 apiVersion: v1
@@ -31,4 +31,3 @@ spec:
   gcePersistentDisk:
     pdName: {{ required "Missing value FDK_MONGODB_VOLUMENAME_DB" .Values.FDK_MONGODB_VOLUMENAME_DB }}
     fsType: ext4
-{{ end }}
