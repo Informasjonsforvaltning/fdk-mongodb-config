@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   deploy-production:
@@ -11,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Create yaml file from secret
         id: write_file
@@ -22,26 +24,24 @@ jobs:
 
       - name: Apply Helm template
         run: |
-          helm repo add fdk-mongodb https://informasjonsforvaltning.github.io/fdk-mongodb-config/
-          helm fetch --untar --untardir ./helm fdk-mongodb/mongodb
-          helm template -f ${{ steps.write_file.outputs.filePath }} ./helm/mongodb/ > ./kubectlapply.yaml
+          helm template -f ${{ steps.write_file.outputs.filePath }} ./helm-sources/ > ./kubectlapply.yaml
           chmod o+w ./kubectlapply.yaml
           cat kubectlapply.yaml
 
-      - name: Get kubeconfig file from GKE
-        uses: machine-learning-apps/gke-kubeconfig@master
+      - name: Auth gcloud CLI for deploy
+        uses: google-github-actions/auth@main
         with:
-          application_credentials: ${{ secrets.DIGDIR_FDK_PROD_AUTODEPLOY }}
-          project_id: digdir-fdk-prod
-          location_zone: europe-north1-a
-          cluster_name: digdir-fdk-prod
+          credentials_json: ${{ secrets.DIGDIR_FDK_PROD_AUTODEPLOY }}
 
-      - name: Deploy to production
-        uses: docker://bitnami/kubectl:latest
-        env:
-          KUBECONFIG: '/github/workspace/.kube/config'
-        with:
-          args: "apply -f ./kubectlapply.yaml --force"
+      - name: Deploy to GCP
+        run: |
+          gcloud container clusters get-credentials digdir-fdk-prod --region europe-north1-a --project digdir-fdk-prod
+          kubectl apply -f ./kubectlapply.yaml --force
+          if ! kubectl --namespace=prod rollout status deployment mongodb; then
+          kubectl --namespace=prod rollout undo deployment mongodb
+          kubectl --namespace=prod rollout status deployment mongodb
+          exit 1
+          fi
 
       - name: Notify slack
         uses: 8398a7/action-slack@v3

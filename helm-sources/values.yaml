@@ -4,4 +4,4 @@
 
 ##mongodb
 FDK_MONGODB_MEMORY: "500Mi"
-MONGODB_IMAGE: "mongo:4.2.2"
+MONGODB_IMAGE: "mongo:4.4.10"
