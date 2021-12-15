@@ -24,7 +24,7 @@ jobs:
 
       - name: Apply Helm template
         run: |
-          helm template -f ${{ steps.write_file.outputs.filePath }} ./helm/mongodb/ > ./kubectlapply.yaml
+          helm template -f ${{ steps.write_file.outputs.filePath }} ./helm-sources/ > ./kubectlapply.yaml
           chmod o+w ./kubectlapply.yaml
           cat kubectlapply.yaml
 
